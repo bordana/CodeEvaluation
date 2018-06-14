@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>CoinMarketCap Listing</h1>
+    <p class="lead">...a list of all the cryptocurrencies listing on CoinMarketCap. Type into the box below to filter the list of cryptocurrencies.</p>
+
+</div>
+
+<form>
+    <input type="text" onkeyup="FilterList(this.value)" />
+</form>
+
+<br />
+<br />
+<br />
+<br />
+
+<span id="cryptoNames">
+ 
+@RenderPage("~/Views/Partial/Filter.cshtml")
+
+</span>
+
+<div class="footer">
+	<footer>
+		<p>&copy; @DateTime.Now.Year - CoinMarketCap Listing</p>
+	</footer>
+</div>
+
+<script type="text/javascript">
+
+    function FilterList(filterBy) {
+        var xhttp;
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("cryptoNames").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "Partial/Filter?filter=" + filterBy, true);
+        xhttp.send();
+    }
+</script>
+
